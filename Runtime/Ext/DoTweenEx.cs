@@ -5,26 +5,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class DoTweenEx
+namespace UnityExt
 {
-    public static void ExResetDT(this Tween dt)
+    public static class DoTweenEx
     {
-        if (dt != null && dt.IsActive()) { dt.Kill(); }
-    }
-    public static bool ExIsValidDT(this Tween dt)
-    {
-        return dt != null && dt.IsActive();
-    }
-    public static void ExResetDT(this List<Tween> dtList)
-    {
-        if (dtList != null && dtList.Count > 0)
+        public static void ExResetDT(this Tween dt)
         {
-            for (int i = 0; i < dtList.Count; i++)
+            if (dt != null && dt.IsActive()) { dt.Kill(); }
+        }
+        public static bool ExIsValidDT(this Tween dt)
+        {
+            return dt != null && dt.IsActive();
+        }
+        public static void ExResetDT(this List<Tween> dtList)
+        {
+            dtList.ExForEach((dt) =>
             {
-                var dt = dtList[i];
-                if (dt == null) { continue; }
-                dt.ExResetDT();
-            }
+                if (dt != null) { dt.ExResetDT(); }
+            });
         }
     }
 }

@@ -1,71 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AttributeExt;
 
-public class GameParticle : MonoBehaviour
+namespace UnityExt
 {
-    Transform tr;
-    public Transform _Transform { get { return tr; } }
-    [SerializeField, DebugView] ParticleSystem[] allSys;
-    [SerializeField, DebugView] string status;
-    public void Init()
+    public class GameParticle : MonoBehaviour
     {
-        tr = transform;
-        allSys = GetComponentsInChildren<ParticleSystem>();
-        Stop();
-    }
-
-    public void Stop(bool reactive = false)
-    {
-        if (allSys != null && allSys.Length > 0)
+        Transform tr;
+        public Transform _Transform { get { return tr; } }
+        [SerializeField, CanNotEdit] ParticleSystem[] allSys;
+        [SerializeField, CanNotEdit] string status;
+        public void Init()
         {
-            for (int i = 0; i < allSys.Length; i++)
+            tr = transform;
+            allSys = GetComponentsInChildren<ParticleSystem>();
+            Stop();
+        }
+
+        public void Stop(bool reactive = false)
+        {
+            if (allSys != null && allSys.Length > 0)
             {
-                var sys = allSys[i];
-                if (sys == null) { continue; }
-                if (reactive) { sys.Stop(); }
-                else
+                for (int i = 0; i < allSys.Length; i++)
                 {
-                    if (sys.isPlaying)
+                    var sys = allSys[i];
+                    if (sys == null) { continue; }
+                    if (reactive) { sys.Stop(); }
+                    else
                     {
-                        sys.Stop();
+                        if (sys.isPlaying)
+                        {
+                            sys.Stop();
+                        }
                     }
                 }
             }
+            status = "Stop called";
         }
-        status = "Stop called";
-    }
 
-    public void Play(bool reactive = false)
-    {
-        if (allSys != null && allSys.Length > 0)
+        public void Play(bool reactive = false)
         {
-            for (int i = 0; i < allSys.Length; i++)
+            if (allSys != null && allSys.Length > 0)
             {
-                var sys = allSys[i];
-                if (sys == null) { continue; }
-                if (reactive) 
+                for (int i = 0; i < allSys.Length; i++)
                 {
-                    if (sys.isPlaying) { sys.Stop(); }
-                    sys.Play(); 
-                }
-                else
-                {
-                    if (sys.isPlaying == false)
+                    var sys = allSys[i];
+                    if (sys == null) { continue; }
+                    if (reactive)
                     {
+                        if (sys.isPlaying) { sys.Stop(); }
                         sys.Play();
                     }
+                    else
+                    {
+                        if (sys.isPlaying == false)
+                        {
+                            sys.Play();
+                        }
+                    }
                 }
             }
+            status = "Play called";
         }
-        status = "Play called";
-    }
 
 #if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 2f);
-    }
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, 2f);
+        }
 #endif
+    }
 }

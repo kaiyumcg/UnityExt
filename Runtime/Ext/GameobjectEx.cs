@@ -4,44 +4,47 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public static class GameobjectEx
+namespace UnityExt
 {
-    public static void ExSetActiveObjects(this List<GameObject> objectLists, bool active)
+    public static class GameobjectEx
     {
-        if (objectLists != null && objectLists.Count > 0)
+        public static void ExSetActiveObjects(this List<GameObject> objectLists, bool active)
         {
-            for (int i = 0; i < objectLists.Count; i++)
+            if (objectLists != null && objectLists.Count > 0)
             {
-                var obj = objectLists[i];
-                if (obj == null) { continue; }
-                if (obj.activeInHierarchy == active) { continue; }
-                obj.SetActive(active);
+                for (int i = 0; i < objectLists.Count; i++)
+                {
+                    var obj = objectLists[i];
+                    if (obj == null) { continue; }
+                    if (obj.activeInHierarchy == active) { continue; }
+                    obj.SetActive(active);
+                }
             }
         }
-    }
-    public static void ExSetLayer(this GameObject gameObject, string layerName)
-    {
-        gameObject.layer = LayerMask.NameToLayer(layerName);
-    }
-    public static void ExSetLayerToAllChilds(this GameObject gameObject, string layerName)
-    {
-        gameObject.transform.ExForEachChilds((t) =>
+        public static void ExSetLayer(this GameObject gameObject, string layerName)
         {
-            t.gameObject.ExSetLayer(layerName);
-        });
-    }
-    public static void ExSetLayerToImmediateChilds(this GameObject gameObject, string layerName)
-    {
-        gameObject.transform.ExForEachImmediateChilds((t) =>
+            gameObject.layer = LayerMask.NameToLayer(layerName);
+        }
+        public static void ExSetLayerToAllChilds(this GameObject gameObject, string layerName)
         {
-            t.gameObject.ExSetLayer(layerName);
-        });
-    }
-    public static void ExSetLayerToParents(this GameObject gameObject, string layerName)
-    {
-        gameObject.transform.ExForEachParentOnChain((t) =>
+            gameObject.transform.ExForEachChilds((t) =>
+            {
+                t.gameObject.ExSetLayer(layerName);
+            });
+        }
+        public static void ExSetLayerToImmediateChilds(this GameObject gameObject, string layerName)
         {
-            t.gameObject.ExSetLayer(layerName);
-        });
+            gameObject.transform.ExForEachImmediateChilds((t) =>
+            {
+                t.gameObject.ExSetLayer(layerName);
+            });
+        }
+        public static void ExSetLayerToParents(this GameObject gameObject, string layerName)
+        {
+            gameObject.transform.ExForEachParentOnChain((t) =>
+            {
+                t.gameObject.ExSetLayer(layerName);
+            });
+        }
     }
 }
