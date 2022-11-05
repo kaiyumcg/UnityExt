@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AttributeExt;
 
 public class GameParticle : MonoBehaviour
 {
     Transform tr;
     public Transform _Transform { get { return tr; } }
-    [SerializeField, DebugView] ParticleSystem[] allSys;
-    [SerializeField, DebugView] string status;
+    [SerializeField, CanNotEdit] ParticleSystem[] allSys;
+    [SerializeField, CanNotEdit] string status;
     public void Init()
     {
         tr = transform;
