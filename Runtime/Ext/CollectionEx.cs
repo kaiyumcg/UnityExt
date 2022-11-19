@@ -1293,6 +1293,26 @@ namespace UnityExt
             }
             return result;
         }
+        public static void ExAddRangeUniquely<T>(this List<T> list, List<T> toAdd)
+        {
+            toAdd.ExForEach((i) =>
+            {
+                if (list != null && !list.Contains(i))
+                {
+                    list.Add(i);
+                }
+            });
+        }
+        public static void ExAddRangeUniquely<T>(this List<T> list, T[] toAdd)
+        {
+            toAdd.ExForEach((i) =>
+            {
+                if (list != null && !list.Contains(i))
+                {
+                    list.Add(i);
+                }
+            });
+        }
         public static bool ExIsValid<T>(this T[] array) { return array != null && array.Length > 0; }
         public static bool ExIsValid<T>(this List<T> list) { return list != null && list.Count > 0; }
         public static List<T> ExRemoveNulls<T>(this List<T> list) where T : class
