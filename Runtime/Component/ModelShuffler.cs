@@ -4,92 +4,100 @@ using UnityEngine;
 using UnityExt;
 using AttributeExt;
 
-public class ModelShuffler : MonoBehaviour
+namespace UnityExt
 {
-    [Header("Base setup")]
-    [SerializeField] List<GameObject> props;
-    [SerializeField, CanNotEdit] GameObject selectedProp = null;
-    [SerializeField, CanNotEdit] int selectedPropIndex = 0;
-
-    List<UnityEngine.Object> changeListOnEditor = null;
-    protected void RegisterEditorChange(UnityEngine.Object changedObject)
+    public class ModelShuffler : MonoBehaviour
     {
-        if (changeListOnEditor == null) { changeListOnEditor = new List<Object>(); }
-        if (changeListOnEditor.Contains(changedObject) == false)
+        [Header("Base setup")]
+        [SerializeField] List<GameObject> props;
+        [SerializeField, CanNotEdit] GameObject selectedProp = null;
+        [SerializeField, CanNotEdit] int selectedPropIndex = 0;
+        public int SelectedPropIndex { get { return selectedPropIndex; } set { selectedPropIndex = value; } }
+
+        List<UnityEngine.Object> changeListOnEditor = null;
+        protected void RegisterEditorChange(UnityEngine.Object changedObject)
         {
-            changeListOnEditor.Add(changedObject);
+            if (changeListOnEditor == null) { changeListOnEditor = new List<Object>(); }
+            if (changeListOnEditor.Contains(changedObject) == false)
+            {
+                changeListOnEditor.Add(changedObject);
+            }
         }
-    }
 #if UNITY_EDITOR
-    public void NextProp()
-    {
-        selectedPropIndex++;
-        EditorUpd();
-    }
-    private void OnValidate()
-    {
-        EditorUpd();
-    }
+        public void NextProp()
+        {
+            selectedPropIndex++;
+            EditorUpd();
+        }
+        private void OnValidate()
+        {
+            EditorUpd();
+        }
 
-    public void EditorUpd()
-    {
-        if (Application.isPlaying) { return; }
-        changeListOnEditor = new List<Object>();
-        UpdatePropsOnEditor();
-        RegisterEditorChange(this);
-        changeListOnEditor.ExForEach((i) =>
+        public void EditorUpd()
         {
-            if (i != null)
+            if (Application.isPlaying) { return; }
+            changeListOnEditor = new List<Object>();
+            UpdatePropsOnEditor();
+            RegisterEditorChange(this);
+            changeListOnEditor.ExForEach((i) =>
             {
-                UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(i);
+                if (i != null)
+                {
+                    UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(i);
+                }
+            });
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
+        }
+        void UpdatePropsOnEditor()
+        {
+            props.ExForEach((i) =>
+            {
+                if (i != null)
+                {
+                    i.SetActive(false);
+                    RegisterEditorChange(i);
+                }
+            });
+            CheckIndex();
+            if (props.ExIsValid())
+            {
+                selectedProp = props[selectedPropIndex];
+                if (selectedProp != null)
+                {
+                    RegisterEditorChange(selectedProp);
+                    selectedProp.SetActive(true);
+                }
             }
-        });
-        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
-    }
-    void UpdatePropsOnEditor()
-    {
-        props.ExForEach((i) =>
-        {
-            if (i != null)
+            void CheckIndex()
             {
-                i.SetActive(false);
-                RegisterEditorChange(i);
-            }
-        });
-        CheckIndex();
-        if (props.ExIsValid())
-        {
-            selectedProp = props[selectedPropIndex];
-            if (selectedProp != null)
-            {
-                RegisterEditorChange(selectedProp);
-                selectedProp.SetActive(true);
+                if (selectedPropIndex > props.Count - 1)
+                {
+                    selectedPropIndex = 0;
+                }
             }
         }
-        void CheckIndex()
-        {
-            if (selectedPropIndex > props.Count - 1)
-            {
-                selectedPropIndex = 0;
-            }
-        }
-    }
 #endif
-    void Awake()
-    {
-        props.ExForEach((i) =>
+        void Awake()
         {
-            if (i != null)
-            {
-                i.SetActive(false);
-            }
-        });
-        if (props.ExIsValid())
+            UpdateModel();
+        }
+        public void UpdateModel()
         {
-            selectedProp = props[selectedPropIndex];
-            if (selectedProp != null && selectedProp.activeInHierarchy == false)
+            props.ExForEach((i) =>
             {
-                selectedProp.SetActive(true);
+                if (i != null)
+                {
+                    i.SetActive(false);
+                }
+            });
+            if (props.ExIsValid())
+            {
+                selectedProp = props[selectedPropIndex];
+                if (selectedProp != null && selectedProp.activeInHierarchy == false)
+                {
+                    selectedProp.SetActive(true);
+                }
             }
         }
     }
