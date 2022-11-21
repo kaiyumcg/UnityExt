@@ -1313,6 +1313,30 @@ namespace UnityExt
                 }
             });
         }
+        public static List<T> ExShallowCopy<T>(this List<T> list)
+        {
+            var result = new List<T>();
+            list.ExForEach((i) => { result.Add(i); });
+            return result;
+        }
+        public static List<T> ExDeepCopy<T>(this List<T> list) where T : class, ICloneable
+        {
+            var result = new List<T>();
+            list.ExForEach((i) => { result.Add(i.Clone() as T); });
+            return result;
+        }
+        public static T[] ExShallowCopy<T>(this T[] list)
+        {
+            var result = new T[list.Length];
+            list.ExForEach((i, index) => { result[index] = i; });
+            return result;
+        }
+        public static T[] ExDeepCopy<T>(this T[] list) where T : class, ICloneable
+        {
+            var result = new T[list.Length];
+            list.ExForEach((i, index) => { result[index] = i.Clone() as T; });
+            return result;
+        }
         public static bool ExIsValid<T>(this T[] array) { return array != null && array.Length > 0; }
         public static bool ExIsValid<T>(this List<T> list) { return list != null && list.Count > 0; }
         public static List<T> ExRemoveNulls<T>(this List<T> list) where T : class
