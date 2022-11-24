@@ -8,6 +8,127 @@ using System;
 
 namespace UnityExt
 {
+	public enum ListEffectPlayMode { Serial = 0, Random = 1 }
+	public interface IEffectPlay : ICloneable
+	{
+		void SpawnAndPlay(MonoBehaviour callerContext);
+	}
+
+	[System.Serializable]
+	public class PlayGameParticle : IEffectPlay
+	{
+		[SerializeField] GameParticle effectPrefab;
+		[SerializeField] Vector3 positionalOffset, rotationalOffset;
+		[SerializeField] Vector3 scale = Vector3.one;
+		[SerializeField] Transform effectSpawnPositionOverride = null;
+		[SerializeField] Transform holder;
+		[Header("Negative means it will not destroy, ever!")]
+		[SerializeField] float lifeTime = -1.0f;
+		object ICloneable.Clone()
+		{
+			var newInst = new PlayGameParticle
+			{
+				effectPrefab = effectPrefab,
+				positionalOffset = positionalOffset,
+				rotationalOffset = rotationalOffset,
+				scale = scale,
+				lifeTime = lifeTime
+			};
+			return newInst;
+		}
+		void IEffectPlay.SpawnAndPlay(MonoBehaviour callerContext)
+		{
+			var clone = GameObject.Instantiate(effectPrefab.gameObject) as GameObject;
+			var cloneTr = clone.transform;
+			cloneTr.SetParent(holder);
+			cloneTr.ExResetLocal();
+			var root = callerContext.transform;
+			cloneTr.position = effectSpawnPositionOverride == null ?
+				root.position + positionalOffset : effectSpawnPositionOverride.position + positionalOffset;
+			cloneTr.rotation = effectSpawnPositionOverride == null ? root.rotation : effectSpawnPositionOverride.rotation;
+			cloneTr.localEulerAngles += rotationalOffset;
+			cloneTr.localScale = scale;
+			var effect = clone.GetComponent<GameParticle>();
+			effect.Init();
+			effect.Play();
+
+			if (lifeTime >= 0.0f)
+			{
+				callerContext.StartCoroutine(COR());
+				IEnumerator COR()
+				{
+					yield return new WaitForSeconds(lifeTime);
+					GameObject.Destroy(clone);
+				}
+			}
+		}
+	}
+
+	[System.Serializable]
+	public class PlayGameParticleFromList : IEffectPlay
+	{
+		[SerializeField] ListEffectPlayMode mode = ListEffectPlayMode.Random;
+		[SerializeField] List<GameParticle> effectPrefabs;
+		[SerializeField] Vector3 positionalOffset, rotationalOffset;
+		[SerializeField] Vector3 scale = Vector3.one;
+		[SerializeField] Transform effectSpawnPositionOverride = null;
+		[SerializeField] Transform holder;
+		[Header("Negative means it will not destroy, ever!")]
+		[SerializeField] float lifeTime = -1.0f;
+		int id = 0;
+		object ICloneable.Clone()
+		{
+			var newInst = new PlayGameParticleFromList
+			{
+				mode = mode,
+				effectPrefabs = effectPrefabs,
+				positionalOffset = positionalOffset,
+				rotationalOffset = rotationalOffset,
+				scale = scale,
+				lifeTime = lifeTime
+			};
+			return newInst;
+		}
+		void IEffectPlay.SpawnAndPlay(MonoBehaviour callerContext)
+		{
+			GameParticle selEff;
+			if (mode == ListEffectPlayMode.Random)
+			{
+				selEff = effectPrefabs[UnityEngine.Random.Range(0, effectPrefabs.Count)];
+			}
+			else
+			{
+				selEff = effectPrefabs[id];
+				id++;
+				if (id > effectPrefabs.Count - 1) { id = 0; }
+			}
+
+			var clone = GameObject.Instantiate(selEff.gameObject) as GameObject;
+			var cloneTr = clone.transform;
+			cloneTr.SetParent(holder);
+			cloneTr.ExResetLocal();
+			var root = callerContext.transform;
+			cloneTr.position = effectSpawnPositionOverride == null ?
+				root.position + positionalOffset : effectSpawnPositionOverride.position + positionalOffset;
+			cloneTr.rotation = effectSpawnPositionOverride == null ? root.rotation : effectSpawnPositionOverride.rotation;
+			cloneTr.localEulerAngles += rotationalOffset;
+			cloneTr.localScale = scale;
+			var effect = clone.GetComponent<GameParticle>();
+			effect.Init();
+			effect.Play();
+
+			if (lifeTime >= 0.0f)
+			{
+				callerContext.StartCoroutine(COR());
+				IEnumerator COR()
+				{
+					yield return new WaitForSeconds(lifeTime);
+					GameObject.Destroy(clone);
+				}
+			}
+		}
+	}
+
 	public class PlayerStorage<T> where T : struct
 	{
 		void GetValueFromStringError(string customMsg)
