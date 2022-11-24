@@ -9,6 +9,11 @@
   "keywords": [
     "extension methods"
   ],
+"author": 
+{
+"name": "Md Al Kaiyum (Rumman)",
+"url": "https://github.com/kaiyumcg"
+},
   "dependencies": {
     "com.unity.ugui": "1.0.0",
 	"com.kaiyum.attributeext": "1.0.0"
