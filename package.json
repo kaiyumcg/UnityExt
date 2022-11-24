@@ -1,0 +1,16 @@
+{
+  "name": "com.kaiyum.unityext",
+  "author": "Md Al Kaiyum (Rumman)",
+  "displayName": "UnityExt",
+  "version": "1.0.0",
+  "unity": "2018.3",
+  "description": "A collection of useful extension methods for unity engine.",
+  "category": "Unity",
+  "keywords": [
+    "extension methods"
+  ],
+  "dependencies": {
+    "com.unity.ugui": "1.0.0",
+	"com.kaiyum.attributeext": "1.0.0"
+  }
+}

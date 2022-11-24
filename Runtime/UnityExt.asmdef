@@ -3,8 +3,7 @@
     "rootNamespace": "",
     "references": [
         "AttributeExt",
-        "UnityEngine.UI",
-        "DOTween.Modules"
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
