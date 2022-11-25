@@ -15,6 +15,6 @@
 "url": "https://github.com/kaiyumcg"
 },
   "dependencies": {
-	"com.kaiyum.attributeext": "https://github.com/kaiyumcg/AttributeExt.git"
+	"com.kaiyum.attributeext": "1.0.0"
   }
 }
