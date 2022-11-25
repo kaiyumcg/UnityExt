@@ -15,7 +15,6 @@
 "url": "https://github.com/kaiyumcg"
 },
   "dependencies": {
-    	"com.unity.ugui": "1.0.0",
 	"com.kaiyum.attributeext": "https://github.com/kaiyumcg/AttributeExt.git"
   }
 }
