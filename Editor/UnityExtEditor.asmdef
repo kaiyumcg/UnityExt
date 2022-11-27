@@ -2,7 +2,8 @@
     "name": "UnityExtEditor",
     "rootNamespace": "",
     "references": [
-        "UnityExt"
+        "UnityExt",
+        "EditorUtil"
     ],
     "includePlatforms": [
         "Editor"

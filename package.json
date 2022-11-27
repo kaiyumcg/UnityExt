@@ -1,20 +1,20 @@
 {
   "name": "com.kaiyum.unityext",
-  "author": "Md Al Kaiyum (Rumman)",
   "displayName": "UnityExt",
   "version": "1.0.0",
   "unity": "2018.3",
-  "description": "A collection of useful extension methods for unity engine.",
+  "description": "A collection of useful extension methods",
   "category": "Unity",
   "keywords": [
-    "extension methods"
+    "extension"
   ],
 "author": 
 {
-"name": "Md Al Kaiyum (Rumman)",
+"name": "Md Al Kaiyum",
 "url": "https://github.com/kaiyumcg"
 },
   "dependencies": {
-	"com.kaiyum.attributeext" : "https://github.com/kaiyumcg/attributeext.git"
+    "com.kaiyum.attributeext": "https://github.com/kaiyumcg/attributeext.git",
+    "com.kaiyum.editorutil": "https://github.com/kaiyumcg/EditorUtil.git"
   }
 }
