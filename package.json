@@ -2,7 +2,7 @@
   "name": "com.kaiyum.unityext",
   "displayName": "UnityExt",
   "version": "1.0.0",
-  "unity": "2020.3.20f1",
+  "unity": "2020.3",
   "description": "A collection of useful extension methods",
   "licence": "MIT",
   "category": "Unity",
