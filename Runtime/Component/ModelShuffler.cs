@@ -8,6 +8,7 @@ namespace UnityExt
 {
     public class ModelShuffler : MonoBehaviour
     {
+        //todo next, prev, set id etc control in editor
         [Header("Base setup")]
         [SerializeField] List<GameObject> props;
         [SerializeField, CanNotEdit] GameObject selectedProp = null;
