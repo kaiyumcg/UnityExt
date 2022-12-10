@@ -27,6 +27,26 @@ namespace UnityExt
                 await Code?.Invoke(l);
             }
         }
+        public static void ExForEachSafe<T>(this List<T> list, OnDoAnything<T> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Count; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                Code?.Invoke(l);
+            }
+        }
+        public static async Task ExForEachAsyncSafe<T>(this List<T> list, Func<T, Task> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Count; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                await Code?.Invoke(l);
+            }
+        }
         public static void ExForEach_NoCheck<T>(this List<T> list, OnDoAnything<T> Code)
         {
             for (int i = 0; i < list.Count; i++)
@@ -74,6 +94,26 @@ namespace UnityExt
             for (int i = 0; i < list.Length; i++)
             {
                 var l = list[i];
+                await Code?.Invoke(l);
+            }
+        }
+        public static void ExForEachSafe<T>(this T[] list, OnDoAnything<T> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Length; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                Code?.Invoke(l);
+            }
+        }
+        public static async Task ExForEachAsyncSafe<T>(this T[] list, Func<T, Task> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Length; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
                 await Code?.Invoke(l);
             }
         }
@@ -130,6 +170,26 @@ namespace UnityExt
                 await Code?.Invoke(l, i);
             }
         }
+        public static void ExForEachSafe<T>(this List<T> list, OnDoAnything<T, int> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Count; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                Code?.Invoke(l, i);
+            }
+        }
+        public static async Task ExForEachAsyncSafe<T>(this List<T> list, Func<T, int, Task> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Count; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                await Code?.Invoke(l, i);
+            }
+        }
         public static void ExForEach_NoCheck<T>(this List<T> list, OnDoAnything<T, int> Code)
         {
             for (int i = 0; i < list.Count; i++)
@@ -177,6 +237,26 @@ namespace UnityExt
             for (int i = 0; i < list.Length; i++)
             {
                 var l = list[i];
+                await Code?.Invoke(l, i);
+            }
+        }
+        public static void ExForEachSafe<T>(this T[] list, OnDoAnything<T, int> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Length; i++)
+            {
+                var l = list[i];
+                if(l == null) { continue; }
+                Code?.Invoke(l, i);
+            }
+        }
+        public static async Task ExForEachAsyncSafe<T>(this T[] list, Func<T, int, Task> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Length; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
                 await Code?.Invoke(l, i);
             }
         }
@@ -235,6 +315,28 @@ namespace UnityExt
                 await Code?.Invoke(l);
             }
         }
+        public static void ExForEachSafe<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Count; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l)) { break; }
+                Code?.Invoke(l);
+            }
+        }
+        public static async Task ExForEachAsyncSafe<T>(this List<T> list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Count; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l)) { break; }
+                await Code?.Invoke(l);
+            }
+        }
         public static void ExForEach_NoCheck<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak)
         {
             for (int i = 0; i < list.Count; i++)
@@ -287,6 +389,28 @@ namespace UnityExt
             for (int i = 0; i < list.Length; i++)
             {
                 var l = list[i];
+                if (whenBreak.Invoke(l)) { break; }
+                await Code?.Invoke(l);
+            }
+        }
+        public static void ExForEachSafe<T>(this T[] list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Length; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l)) { break; }
+                Code?.Invoke(l);
+            }
+        }
+        public static async Task ExForEachAsyncSafe<T>(this T[] list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Length; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
                 if (whenBreak.Invoke(l)) { break; }
                 await Code?.Invoke(l);
             }
@@ -350,6 +474,28 @@ namespace UnityExt
                 await Code?.Invoke(l, i);
             }
         }
+        public static void ExForEachSafe<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Count; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l, i)) { break; }
+                Code?.Invoke(l, i);
+            }
+        }
+        public static async Task ExForEachAsyncSafe<T>(this List<T> list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Count; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l, i)) { break; }
+                await Code?.Invoke(l, i);
+            }
+        }
         public static void ExForEach_NoCheck<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak)
         {
             for (int i = 0; i < list.Count; i++)
@@ -402,6 +548,28 @@ namespace UnityExt
             for (int i = 0; i < list.Length; i++)
             {
                 var l = list[i];
+                if (whenBreak.Invoke(l, i)) { break; }
+                await Code?.Invoke(l, i);
+            }
+        }
+        public static void ExForEachSafe<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Length; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l, i)) { break; }
+                Code?.Invoke(l, i);
+            }
+        }
+        public static async Task ExForEachAsyncSafe<T>(this T[] list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = 0; i < list.Length; i++)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
                 if (whenBreak.Invoke(l, i)) { break; }
                 await Code?.Invoke(l, i);
             }
@@ -463,6 +631,26 @@ namespace UnityExt
                 await Code?.Invoke(l);
             }
         }
+        public static void ExForEachReverseSafe<T>(this List<T> list, OnDoAnything<T> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                Code?.Invoke(l);
+            }
+        }
+        public static async Task ExForEachReverseAsyncSafe<T>(this List<T> list, Func<T, Task> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                await Code?.Invoke(l);
+            }
+        }
         public static void ExForEachReverse_NoCheck<T>(this List<T> list, OnDoAnything<T> Code)
         {
             for (int i = list.Count - 1; i >= 0; i--)
@@ -510,6 +698,26 @@ namespace UnityExt
             for (int i = list.Length - 1; i >= 0; i--)
             {
                 var l = list[i];
+                await Code?.Invoke(l);
+            }
+        }
+        public static void ExForEachReverseSafe<T>(this T[] list, OnDoAnything<T> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Length - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                Code?.Invoke(l);
+            }
+        }
+        public static async Task ExForEachReverseAsyncSafe<T>(this T[] list, Func<T, Task> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Length - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
                 await Code?.Invoke(l);
             }
         }
@@ -566,6 +774,26 @@ namespace UnityExt
                 await Code?.Invoke(l, i);
             }
         }
+        public static void ExForEachReverseSafe<T>(this List<T> list, OnDoAnything<T, int> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                Code?.Invoke(l, i);
+            }
+        }
+        public static async Task ExForEachReverseAsyncSafe<T>(this List<T> list, Func<T, int, Task> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                await Code?.Invoke(l, i);
+            }
+        }
         public static void ExForEachReverse_NoCheck<T>(this List<T> list, OnDoAnything<T, int> Code)
         {
             for (int i = list.Count - 1; i >= 0; i--)
@@ -613,6 +841,26 @@ namespace UnityExt
             for (int i = list.Length - 1; i >= 0; i--)
             {
                 var l = list[i];
+                await Code?.Invoke(l, i);
+            }
+        }
+        public static void ExForEachReverseSafe<T>(this T[] list, OnDoAnything<T, int> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Length - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                Code?.Invoke(l, i);
+            }
+        }
+        public static async Task ExForEachReverseAsyncSafe<T>(this T[] list, Func<T, int, Task> Code) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Length - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
                 await Code?.Invoke(l, i);
             }
         }
@@ -671,6 +919,28 @@ namespace UnityExt
                 await Code?.Invoke(l);
             }
         }
+        public static void ExForEachReverseSafe<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l)) { break; }
+                Code?.Invoke(l);
+            }
+        }
+        public static async Task ExForEachReverseAsyncSafe<T>(this List<T> list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l)) { break; }
+                await Code?.Invoke(l);
+            }
+        }
         public static void ExForEachReverse_NoCheck<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak)
         {
             for (int i = list.Count - 1; i >= 0; i--)
@@ -723,6 +993,28 @@ namespace UnityExt
             for (int i = list.Length - 1; i >= 0; i--)
             {
                 var l = list[i];
+                if (whenBreak.Invoke(l)) { break; }
+                await Code?.Invoke(l);
+            }
+        }
+        public static void ExForEachReverseSafe<T>(this T[] list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Length - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l)) { break; }
+                Code?.Invoke(l);
+            }
+        }
+        public static async Task ExForEachReverseAsyncSafe<T>(this T[] list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Length - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
                 if (whenBreak.Invoke(l)) { break; }
                 await Code?.Invoke(l);
             }
@@ -786,6 +1078,28 @@ namespace UnityExt
                 await Code?.Invoke(l, i);
             }
         }
+        public static void ExForEachReverseSafe<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l, i)) { break; }
+                Code?.Invoke(l, i);
+            }
+        }
+        public static async Task ExForEachReverseAsyncSafe<T>(this List<T> list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l, i)) { break; }
+                await Code?.Invoke(l, i);
+            }
+        }
         public static void ExForEachReverse_NoCheck<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak)
         {
             for (int i = list.Count - 1; i >= 0; i--)
@@ -842,6 +1156,28 @@ namespace UnityExt
                 await Code?.Invoke(l, i);
             }
         }
+        public static void ExForEachReverseSafe<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Length - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l, i)) { break; }
+                Code?.Invoke(l, i);
+            }
+        }
+        public static async Task ExForEachReverseAsyncSafe<T>(this T[] list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : class
+        {
+            if (list.ExIsValid() == false) { return; }
+            for (int i = list.Length - 1; i >= 0; i--)
+            {
+                var l = list[i];
+                if (l == null) { continue; }
+                if (whenBreak.Invoke(l, i)) { break; }
+                await Code?.Invoke(l, i);
+            }
+        }
         public static void ExForEachReverse_NoCheck<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak)
         {
             for (int i = list.Length - 1; i >= 0; i--)
@@ -880,366 +1216,6 @@ namespace UnityExt
         }
         #endregion
 
-        #region Foreach-No Null
-        public static void ExForEachNoNull<T>(this List<T> list, OnDoAnything<T> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Count; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                Code?.Invoke(l);
-            }
-        }
-        public static async Task ExForEachAsyncNoNull<T>(this List<T> list, Func<T, Task> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Count; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                await Code?.Invoke(l);
-            }
-        }
-        public static void ExForEachNoNull<T>(this T[] list, OnDoAnything<T> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Length; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                Code?.Invoke(l);
-            }
-        }
-        public static async Task ExForEachAsyncNoNull<T>(this T[] list, Func<T, Task> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Length; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                await Code?.Invoke(l);
-            }
-        }
-        #endregion
-
-        #region Foreach With ID-No Null
-        public static void ExForEachNoNull<T>(this List<T> list, OnDoAnything<T, int> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Count; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                Code?.Invoke(l, i);
-            }
-        }
-        public static async Task ExForEachAsyncNoNull<T>(this List<T> list, Func<T, int, Task> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Count; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                await Code?.Invoke(l, i);
-            }
-        }
-        public static void ExForEachNoNull<T>(this T[] list, OnDoAnything<T, int> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Length; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                Code?.Invoke(l, i);
-            }
-        }
-        public static async Task ExForEachAsyncNoNull<T>(this T[] list, Func<T, int, Task> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Length; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                await Code?.Invoke(l, i);
-            }
-        }
-        #endregion
-
-        #region Foreach with break-No Null
-        public static void ExForEachNoNull<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Count; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l)) { break; }
-                Code?.Invoke(l);
-            }
-        }
-        public static async Task ExForEachAsyncNoNull<T>(this List<T> list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Count; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l)) { break; }
-                await Code?.Invoke(l);
-            }
-        }
-        public static void ExForEachNoNull<T>(this T[] list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Length; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l)) { break; }
-                Code?.Invoke(l);
-            }
-        }
-        public static async Task ExForEachAsyncNoNull<T>(this T[] list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Length; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l)) { break; }
-                await Code?.Invoke(l);
-            }
-        }
-        #endregion
-
-        #region Foreach With ID-No Null
-        public static void ExForEachNoNull<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Count; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l, i)) { break; }
-                Code?.Invoke(l, i);
-            }
-        }
-        public static async Task ExForEachAsyncNoNull<T>(this List<T> list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Count; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l, i)) { break; }
-                await Code?.Invoke(l, i);
-            }
-        }
-        public static void ExForEachNoNull<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Length; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l, i)) { break; }
-                Code?.Invoke(l, i);
-            }
-        }
-        public static async Task ExForEachAsyncNoNull<T>(this T[] list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = 0; i < list.Length; i++)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l, i)) { break; }
-                await Code?.Invoke(l, i);
-            }
-        }
-        #endregion
-
-        #region Foreach Reverse-No Null
-        public static void ExForEachReverseNoNull<T>(this List<T> list, OnDoAnything<T> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                Code?.Invoke(l);
-            }
-        }
-        public static async Task ExForEachReverseAsyncNoNull<T>(this List<T> list, Func<T, Task> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                await Code?.Invoke(l);
-            }
-        }
-        public static void ExForEachReverseNoNull<T>(this T[] list, OnDoAnything<T> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Length - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                Code?.Invoke(l);
-            }
-        }
-        public static async Task ExForEachReverseAsyncNoNull<T>(this T[] list, Func<T, Task> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Length - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                await Code?.Invoke(l);
-            }
-        }
-        #endregion
-
-        #region Foreach Reverse With ID-No Null
-        public static void ExForEachReverseNoNull<T>(this List<T> list, OnDoAnything<T, int> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                Code?.Invoke(l, i);
-            }
-        }
-        public static async Task ExForEachReverseAsyncNoNull<T>(this List<T> list, Func<T, int, Task> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                await Code?.Invoke(l, i);
-            }
-        }
-        public static void ExForEachReverseNoNull<T>(this T[] list, OnDoAnything<T, int> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Length - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                Code?.Invoke(l, i);
-            }
-        }
-        public static async Task ExForEachReverseAsyncNoNull<T>(this T[] list, Func<T, int, Task> Code) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Length - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                await Code?.Invoke(l, i);
-            }
-        }
-        #endregion
-
-        #region Foreach Reverse with break-No Null
-        public static void ExForEachReverseNoNull<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l)) { break; }
-                Code?.Invoke(l);
-            }
-        }
-        public static async Task ExForEachReverseAsyncNoNull<T>(this List<T> list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l)) { break; }
-                await Code?.Invoke(l);
-            }
-        }
-        public static void ExForEachReverseNoNull<T>(this T[] list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Length - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l)) { break; }
-                Code?.Invoke(l);
-            }
-        }
-        public static async Task ExForEachReverseAsyncNoNull<T>(this T[] list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Length - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l)) { break; }
-                await Code?.Invoke(l);
-            }
-        }
-        #endregion
-
-        #region Foreach Reverse With ID-No Null
-        public static void ExForEachReverseNoNull<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l, i)) { break; }
-                Code?.Invoke(l, i);
-            }
-        }
-        public static async Task ExForEachReverseAsyncNoNull<T>(this List<T> list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l, i)) { break; }
-                await Code?.Invoke(l, i);
-            }
-        }
-        public static void ExForEachReverseNoNull<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Length - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l, i)) { break; }
-                Code?.Invoke(l, i);
-            }
-        }
-        public static async Task ExForEachReverseAsyncNoNull<T>(this T[] list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : class
-        {
-            if (list.ExIsValid() == false) { return; }
-            for (int i = list.Length - 1; i >= 0; i--)
-            {
-                var l = list[i];
-                if (l == null) { continue; }
-                if (whenBreak.Invoke(l, i)) { break; }
-                await Code?.Invoke(l, i);
-            }
-        }
-        #endregion
-
         public static bool ExHasAnyNull<T>(this T[] array) where T : class
         {
             return array.ExContains(null);
@@ -1251,7 +1227,7 @@ namespace UnityExt
         public static int ExNotNullCount<T>(this T[] array) where T : class
         {
             var count = 0;
-            array.ExForEach((t) =>
+            array.ExForEachSafe((t) =>
             {
                 if (t != null) { count++; }
             });
@@ -1260,7 +1236,7 @@ namespace UnityExt
         public static int ExNotNullCount<T>(this List<T> list) where T : class
         {
             var count = 0;
-            list.ExForEach((t) =>
+            list.ExForEachSafe((t) =>
             {
                 if (t != null) { count++; }
             });
@@ -1269,7 +1245,7 @@ namespace UnityExt
         public static int ExNullCount<T>(this T[] array) where T : class
         {
             var count = 0;
-            array.ExForEach((t) =>
+            array.ExForEachSafe((t) =>
             {
                 if (t == null) { count++; }
             });
@@ -1278,7 +1254,7 @@ namespace UnityExt
         public static int ExNullCount<T>(this List<T> list) where T : class
         {
             var count = 0;
-            list.ExForEach((t) =>
+            list.ExForEachSafe((t) =>
             {
                 if (t == null) { count++; }
             });
@@ -1322,7 +1298,7 @@ namespace UnityExt
         public static List<T> ExDeepCopy<T>(this List<T> list) where T : class, ICloneable
         {
             var result = new List<T>();
-            list.ExForEach((i) => { result.Add(i.Clone() as T); });
+            list.ExForEachSafe((i) => { result.Add(i.Clone() as T); });
             return result;
         }
         public static T[] ExShallowCopy<T>(this T[] list)
@@ -1334,7 +1310,7 @@ namespace UnityExt
         public static T[] ExDeepCopy<T>(this T[] list) where T : class, ICloneable
         {
             var result = new T[list.Length];
-            list.ExForEach((i, index) => { result[index] = i.Clone() as T; });
+            list.ExForEachSafe((i, index) => { result[index] = i.Clone() as T; });
             return result;
         }
         public static bool ExIsValid<T>(this T[] array) { return array != null && array.Length > 0; }
