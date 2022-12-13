@@ -9,7 +9,7 @@ namespace UnityExt
     public static class ExCollection
     {
         #region Foreach
-        public static void ExForEach<T>(this List<T> list, OnDoAnything<T> Code)
+        public static void ExForEach<T>(this List<T> list, OnDoAnything<T> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Count; i++)
@@ -18,7 +18,7 @@ namespace UnityExt
                 Code?.Invoke(l);
             }
         }
-        public static async Task ExForEachAsync<T>(this List<T> list, Func<T, Task> Code)
+        public static async Task ExForEachAsync<T>(this List<T> list, Func<T, Task> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Count; i++)
@@ -79,7 +79,7 @@ namespace UnityExt
                 await Code.Invoke(l);
             }
         }
-        public static void ExForEach<T>(this T[] list, OnDoAnything<T> Code)
+        public static void ExForEach<T>(this T[] list, OnDoAnything<T> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Length; i++)
@@ -88,7 +88,7 @@ namespace UnityExt
                 Code?.Invoke(l);
             }
         }
-        public static async Task ExForEachAsync<T>(this T[] list, Func<T, Task> Code)
+        public static async Task ExForEachAsync<T>(this T[] list, Func<T, Task> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Length; i++)
@@ -152,7 +152,7 @@ namespace UnityExt
         #endregion
 
         #region Foreach With ID
-        public static void ExForEach<T>(this List<T> list, OnDoAnything<T, int> Code)
+        public static void ExForEach<T>(this List<T> list, OnDoAnything<T, int> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Count; i++)
@@ -161,7 +161,7 @@ namespace UnityExt
                 Code?.Invoke(l, i);
             }
         }
-        public static async Task ExForEachAsync<T>(this List<T> list, Func<T, int, Task> Code)
+        public static async Task ExForEachAsync<T>(this List<T> list, Func<T, int, Task> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Count; i++)
@@ -222,7 +222,7 @@ namespace UnityExt
                 await Code.Invoke(l, i);
             }
         }
-        public static void ExForEach<T>(this T[] list, OnDoAnything<T, int> Code)
+        public static void ExForEach<T>(this T[] list, OnDoAnything<T, int> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Length; i++)
@@ -231,7 +231,7 @@ namespace UnityExt
                 Code?.Invoke(l, i);
             }
         }
-        public static async Task ExForEachAsync<T>(this T[] list, Func<T, int, Task> Code)
+        public static async Task ExForEachAsync<T>(this T[] list, Func<T, int, Task> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Length; i++)
@@ -295,7 +295,7 @@ namespace UnityExt
         #endregion
 
         #region Foreach with break
-        public static void ExForEach<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak)
+        public static void ExForEach<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Count; i++)
@@ -305,7 +305,7 @@ namespace UnityExt
                 Code?.Invoke(l);
             }
         }
-        public static async Task ExForEachAsync<T>(this List<T> list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak)
+        public static async Task ExForEachAsync<T>(this List<T> list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Count; i++)
@@ -373,7 +373,7 @@ namespace UnityExt
                 await Code.Invoke(l);
             }
         }
-        public static void ExForEach<T>(this T[] list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak)
+        public static void ExForEach<T>(this T[] list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Length; i++)
@@ -383,7 +383,7 @@ namespace UnityExt
                 Code?.Invoke(l);
             }
         }
-        public static async Task ExForEachAsync<T>(this T[] list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak)
+        public static async Task ExForEachAsync<T>(this T[] list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Length; i++)
@@ -454,7 +454,7 @@ namespace UnityExt
         #endregion
 
         #region Foreach With ID
-        public static void ExForEach<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak)
+        public static void ExForEach<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Count; i++)
@@ -464,7 +464,7 @@ namespace UnityExt
                 Code?.Invoke(l, i);
             }
         }
-        public static async Task ExForEachAsync<T>(this List<T> list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak)
+        public static async Task ExForEachAsync<T>(this List<T> list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Count; i++)
@@ -532,7 +532,7 @@ namespace UnityExt
                 await Code.Invoke(l, i);
             }
         }
-        public static void ExForEach<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak)
+        public static void ExForEach<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Length; i++)
@@ -542,7 +542,7 @@ namespace UnityExt
                 Code?.Invoke(l, i);
             }
         }
-        public static async Task ExForEachAsync<T>(this T[] list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak)
+        public static async Task ExForEachAsync<T>(this T[] list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = 0; i < list.Length; i++)
@@ -613,7 +613,7 @@ namespace UnityExt
         #endregion
 
         #region Foreach Reverse
-        public static void ExForEachReverse<T>(this List<T> list, OnDoAnything<T> Code)
+        public static void ExForEachReverse<T>(this List<T> list, OnDoAnything<T> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Count - 1; i >= 0; i--)
@@ -622,7 +622,7 @@ namespace UnityExt
                 Code?.Invoke(l);
             }
         }
-        public static async Task ExForEachReverseAsync<T>(this List<T> list, Func<T, Task> Code)
+        public static async Task ExForEachReverseAsync<T>(this List<T> list, Func<T, Task> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Count - 1; i >= 0; i--)
@@ -683,7 +683,7 @@ namespace UnityExt
                 await Code.Invoke(l);
             }
         }
-        public static void ExForEachReverse<T>(this T[] list, OnDoAnything<T> Code)
+        public static void ExForEachReverse<T>(this T[] list, OnDoAnything<T> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Length - 1; i >= 0; i--)
@@ -692,7 +692,7 @@ namespace UnityExt
                 Code?.Invoke(l);
             }
         }
-        public static async Task ExForEachReverseAsync<T>(this T[] list, Func<T, Task> Code)
+        public static async Task ExForEachReverseAsync<T>(this T[] list, Func<T, Task> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Length - 1; i >= 0; i--)
@@ -756,7 +756,7 @@ namespace UnityExt
         #endregion
 
         #region Foreach Reverse With ID
-        public static void ExForEachReverse<T>(this List<T> list, OnDoAnything<T, int> Code)
+        public static void ExForEachReverse<T>(this List<T> list, OnDoAnything<T, int> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Count - 1; i >= 0; i--)
@@ -765,7 +765,7 @@ namespace UnityExt
                 Code?.Invoke(l, i);
             }
         }
-        public static async Task ExForEachReverseAsync<T>(this List<T> list, Func<T, int, Task> Code)
+        public static async Task ExForEachReverseAsync<T>(this List<T> list, Func<T, int, Task> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Count - 1; i >= 0; i--)
@@ -826,7 +826,7 @@ namespace UnityExt
                 await Code.Invoke(l, i);
             }
         }
-        public static void ExForEachReverse<T>(this T[] list, OnDoAnything<T, int> Code)
+        public static void ExForEachReverse<T>(this T[] list, OnDoAnything<T, int> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Length - 1; i >= 0; i--)
@@ -835,7 +835,7 @@ namespace UnityExt
                 Code?.Invoke(l, i);
             }
         }
-        public static async Task ExForEachReverseAsync<T>(this T[] list, Func<T, int, Task> Code)
+        public static async Task ExForEachReverseAsync<T>(this T[] list, Func<T, int, Task> Code) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Length - 1; i >= 0; i--)
@@ -899,7 +899,7 @@ namespace UnityExt
         #endregion
 
         #region Foreach Reverse with break
-        public static void ExForEachReverse<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak)
+        public static void ExForEachReverse<T>(this List<T> list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Count - 1; i >= 0; i--)
@@ -909,7 +909,7 @@ namespace UnityExt
                 Code?.Invoke(l);
             }
         }
-        public static async Task ExForEachReverseAsync<T>(this List<T> list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak)
+        public static async Task ExForEachReverseAsync<T>(this List<T> list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Count - 1; i >= 0; i--)
@@ -977,7 +977,7 @@ namespace UnityExt
                 await Code.Invoke(l);
             }
         }
-        public static void ExForEachReverse<T>(this T[] list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak)
+        public static void ExForEachReverse<T>(this T[] list, OnDoAnything<T> Code, WhenToDoFunc<T> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Length - 1; i >= 0; i--)
@@ -987,7 +987,7 @@ namespace UnityExt
                 Code?.Invoke(l);
             }
         }
-        public static async Task ExForEachReverseAsync<T>(this T[] list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak)
+        public static async Task ExForEachReverseAsync<T>(this T[] list, Func<T, Task> Code, WhenToDoFunc<T> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Length - 1; i >= 0; i--)
@@ -1058,7 +1058,7 @@ namespace UnityExt
         #endregion
 
         #region Foreach Reverse With ID
-        public static void ExForEachReverse<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak)
+        public static void ExForEachReverse<T>(this List<T> list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Count - 1; i >= 0; i--)
@@ -1068,7 +1068,7 @@ namespace UnityExt
                 Code?.Invoke(l, i);
             }
         }
-        public static async Task ExForEachReverseAsync<T>(this List<T> list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak)
+        public static async Task ExForEachReverseAsync<T>(this List<T> list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Count - 1; i >= 0; i--)
@@ -1136,7 +1136,7 @@ namespace UnityExt
                 await Code.Invoke(l, i);
             }
         }
-        public static void ExForEachReverse<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak)
+        public static void ExForEachReverse<T>(this T[] list, OnDoAnything<T, int> Code, WhenToDoFunc<T, int> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Length - 1; i >= 0; i--)
@@ -1146,7 +1146,7 @@ namespace UnityExt
                 Code?.Invoke(l, i);
             }
         }
-        public static async Task ExForEachReverseAsync<T>(this T[] list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak)
+        public static async Task ExForEachReverseAsync<T>(this T[] list, Func<T, int, Task> Code, WhenToDoFunc<T, int> whenBreak) where T : struct
         {
             if (list.ExIsValid() == false) { return; }
             for (int i = list.Length - 1; i >= 0; i--)
@@ -1269,7 +1269,33 @@ namespace UnityExt
             }
             return result;
         }
-        public static void ExAddRangeUniquely<T>(this List<T> list, List<T> toAdd)
+        public static void ExAddRangeUniquely<T>(this List<T> list, List<T> toAdd) where T : class
+        {
+            toAdd.ExForEachSafe((i) =>
+            {
+                if (list != null && !list.Contains(i))
+                {
+                    list.Add(i);
+                }
+            });
+        }
+        public static void ExAddRangeUniquely<T>(this List<T> list, T[] toAdd) where T : class
+        {
+            toAdd.ExForEachSafe((i) =>
+            {
+                if (list != null && !list.Contains(i))
+                {
+                    list.Add(i);
+                }
+            });
+        }
+        public static List<T> ExShallowCopy<T>(this List<T> list) where T : class
+        {
+            var result = new List<T>();
+            list.ExForEachSafe((i) => { result.Add(i); });
+            return result;
+        }
+        public static void ExAddDataRangeUniquely<T>(this List<T> list, List<T> toAdd) where T : struct
         {
             toAdd.ExForEach((i) =>
             {
@@ -1279,7 +1305,7 @@ namespace UnityExt
                 }
             });
         }
-        public static void ExAddRangeUniquely<T>(this List<T> list, T[] toAdd)
+        public static void ExAddDataRangeUniquely<T>(this List<T> list, T[] toAdd) where T : struct
         {
             toAdd.ExForEach((i) =>
             {
@@ -1289,7 +1315,7 @@ namespace UnityExt
                 }
             });
         }
-        public static List<T> ExShallowCopy<T>(this List<T> list)
+        public static List<T> ExShallowCopyData<T>(this List<T> list) where T : struct
         {
             var result = new List<T>();
             list.ExForEach((i) => { result.Add(i); });
@@ -1301,7 +1327,13 @@ namespace UnityExt
             list.ExForEachSafe((i) => { result.Add(i.Clone() as T); });
             return result;
         }
-        public static T[] ExShallowCopy<T>(this T[] list)
+        public static T[] ExShallowCopy<T>(this T[] list) where T : class
+        {
+            var result = new T[list.Length];
+            list.ExForEachSafe((i, index) => { result[index] = i; });
+            return result;
+        }
+        public static T[] ExShallowCopyData<T>(this T[] list) where T : struct
         {
             var result = new T[list.Length];
             list.ExForEach((i, index) => { result[index] = i; });

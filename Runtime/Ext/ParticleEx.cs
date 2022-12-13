@@ -9,18 +9,18 @@ namespace UnityExt
         #region HouseKeeping
         public static void ExInitParticles(this List<GameParticle> particles)
         {
-            particles.ExForEach(p => { if (p != null) { p.Init(); } });
+            particles.ExForEachSafe(p => { if (p != null) { p.Init(); } });
         }
         public static void ExInitParticles(this GameParticle[] particles)
         {
-            particles.ExForEach(p => { if (p != null) { p.Init(); } });
+            particles.ExForEachSafe(p => { if (p != null) { p.Init(); } });
         }
         #endregion
 
         #region NormalPlayback
         public static void ExPlayParticles(this ParticleSystem[] sysList)
         {
-            sysList.ExForEach(sys =>
+            sysList.ExForEachSafe(sys =>
             {
                 if (sys != null)
                 {
@@ -34,7 +34,7 @@ namespace UnityExt
         }
         public static void ExPlayParticles(this List<ParticleSystem> sysList)
         {
-            sysList.ExForEach(sys =>
+            sysList.ExForEachSafe(sys =>
             {
                 if (sys != null)
                 {
@@ -48,7 +48,7 @@ namespace UnityExt
         }
         public static void ExStopParticles(this ParticleSystem[] sysList)
         {
-            sysList.ExForEach(sys =>
+            sysList.ExForEachSafe(sys =>
             {
                 if (sys != null)
                 {
@@ -61,7 +61,7 @@ namespace UnityExt
         }
         public static void ExStopParticles(this List<ParticleSystem> sysList)
         {
-            sysList.ExForEach(sys =>
+            sysList.ExForEachSafe(sys =>
             {
                 if (sys != null)
                 {
@@ -74,7 +74,7 @@ namespace UnityExt
         }
         public static void ExPlayParticles(this List<GameParticle> particles)
         {
-            particles.ExForEach(sys =>
+            particles.ExForEachSafe(sys =>
             {
                 if (sys != null)
                 {
@@ -84,7 +84,7 @@ namespace UnityExt
         }
         public static void ExPlayParticles(this GameParticle[] particles)
         {
-            particles.ExForEach(sys =>
+            particles.ExForEachSafe(sys =>
             {
                 if (sys != null)
                 {
@@ -94,7 +94,7 @@ namespace UnityExt
         }
         public static void ExStopParticles(this List<GameParticle> particles)
         {
-            particles.ExForEach(sys =>
+            particles.ExForEachSafe(sys =>
             {
                 if (sys != null)
                 {
@@ -104,7 +104,7 @@ namespace UnityExt
         }
         public static void ExStopParticles(this GameParticle[] particles)
         {
-            particles.ExForEach(sys =>
+            particles.ExForEachSafe(sys =>
             {
                 if (sys != null)
                 {

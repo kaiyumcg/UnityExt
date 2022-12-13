@@ -41,7 +41,7 @@ namespace UnityExt
             changeListOnEditor = new List<Object>();
             UpdatePropsOnEditor();
             RegisterEditorChange(this);
-            changeListOnEditor.ExForEach((i) =>
+            changeListOnEditor.ExForEachSafe((i) =>
             {
                 if (i != null)
                 {
@@ -52,7 +52,7 @@ namespace UnityExt
         }
         void UpdatePropsOnEditor()
         {
-            props.ExForEach((i) =>
+            props.ExForEachSafe((i) =>
             {
                 if (i != null)
                 {
@@ -85,7 +85,7 @@ namespace UnityExt
         }
         public void UpdateModel()
         {
-            props.ExForEach((i) =>
+            props.ExForEachSafe((i) =>
             {
                 if (i != null)
                 {

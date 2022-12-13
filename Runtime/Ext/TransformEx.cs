@@ -16,7 +16,7 @@ namespace UnityExt
         }
         public static void ExResetLocal(this List<Transform> transforms)
         {
-            transforms.ExForEach((t) =>
+            transforms.ExForEachSafe((t) =>
             {
                 t.ExResetLocal();
             });
