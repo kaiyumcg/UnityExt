@@ -8,6 +8,52 @@ namespace UnityExt
 {
     public static class ExTransform
     {
+        /// <summary>
+        /// Resizes/Scales a RectTransform for matching the screen safe area.
+        /// VALID only for full screen canvas(overlay?)/parents.
+        /// </summary>
+        public static void ResizeToSafeArea(this RectTransform rectTransform, Canvas canvas)
+        {
+            if (rectTransform == null)
+            {
+                Debug.LogError("recttransform can not be null!");
+            }
+
+            Rect safe = Screen.safeArea;
+            Rect cnvRect = canvas.pixelRect;
+
+            Vector2 anchorMin = safe.position;
+            Vector2 anchorMax = safe.position + safe.size;
+            anchorMin.x /= cnvRect.width;
+            anchorMin.y /= cnvRect.height;
+            anchorMax.x /= cnvRect.width;
+            anchorMax.y /= cnvRect.height;
+
+#if UNITY_EDITOR
+            rectTransform.anchorMin = new Vector2(0f, 0.05f);
+            rectTransform.anchorMax = new Vector2(1f, 0.95f);
+#else
+            rectTransform.anchorMin = anchorMin;
+            rectTransform.anchorMax = anchorMax;
+#endif
+        }
+
+
+        //https://gist.github.com/AdamCarballo/5fd4f021f0332f1bd40f8b1721d1c32f
+        internal static Vector3 ExWorldToCanvasPosition(this Transform worldObj, RectTransform canvas, Camera cam = null)
+        {
+            if (!cam)
+            {
+                cam = Camera.main;
+            }
+            Vector2 ViewportPosition = cam.WorldToViewportPoint(worldObj.position);
+            Vector2 WorldObject_CanvasPosition = new Vector2(
+            ((ViewportPosition.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f)),
+            ((ViewportPosition.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f)));
+
+            return WorldObject_CanvasPosition;
+        }
+
         public static void ExResetLocal(this Transform transform)
         {
             transform.localPosition = Vector3.zero;
