@@ -1,0 +1,23 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityExt;
+
+[System.Serializable]
+//Once created and used in editor inspector, never change this class name, otherwise you will loose data--a known unity bug
+public class #SCRIPTNAME# : IEffectPlay
+{
+        
+    //use it if your internal system needs to clone this class for serialization and/or other purposes
+    //object ICloneable.Clone()
+    //{
+    //    return new #SCRIPTNAME#() { //todo }
+    //}
+
+    void IEffectPlay.SpawnAndPlay(MonoBehaviour callerContext)
+    {
+        //'callerContext' is the monoBehaviour from which 'Spawn And Play' is called
+        //todo implement this method
+    }
+}
