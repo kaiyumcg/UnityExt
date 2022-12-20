@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AttributeExt;
+using AttributeExt2;
 
 namespace UnityExt
 {
@@ -9,8 +9,8 @@ namespace UnityExt
     {
         Transform tr;
         public Transform _Transform { get { return tr; } }
-        [SerializeField, CanNotEdit] ParticleSystem[] allSys;
-        [SerializeField, CanNotEdit] string status;
+        [SerializeField, ReadOnly] ParticleSystem[] allSys;
+        [SerializeField, ReadOnly] string status;
         public void Init()
         {
             tr = transform;

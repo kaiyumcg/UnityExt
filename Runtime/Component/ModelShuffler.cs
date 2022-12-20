@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityExt;
-using AttributeExt;
+using AttributeExt2;
 
 namespace UnityExt
 {
@@ -12,7 +12,7 @@ namespace UnityExt
         [Header("Base setup")]
         [SerializeField] List<GameObject> props;
         [SerializeField] int selectedPropIndex = 0;
-        [SerializeField, CanNotEdit] GameObject selectedProp = null;
+        [SerializeField, ReadOnly] GameObject selectedProp = null;
         public int SelectedPropIndex { get { return selectedPropIndex; } set { selectedPropIndex = value; } }
         List<UnityEngine.Object> changeListOnEditor = null;
         protected void RegisterEditorChange(UnityEngine.Object changedObject)

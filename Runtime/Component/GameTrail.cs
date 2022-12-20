@@ -1,4 +1,4 @@
-using AttributeExt;
+using AttributeExt2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +9,8 @@ namespace UnityExt
     {
         Transform tr;
         public Transform _Transform { get { return tr; } }
-        [SerializeField, CanNotEdit]TrailRenderer trail;
-        [SerializeField, CanNotEdit] string status;
+        [SerializeField, ReadOnly]TrailRenderer trail;
+        [SerializeField, ReadOnly] string status;
         public TrailRenderer Trail { get { return trail; } }
         public void Init()
         {
