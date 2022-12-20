@@ -12,14 +12,17 @@ namespace UnityExt
         [SerializeField] List<GameParticle> effectPrefabs;
         [SerializeField] Vector3 positionalOffset, rotationalOffset;
         [SerializeField] Vector3 scale = Vector3.one;
-        [SerializeField] Transform effectSpawnPositionOverride = null;
-        [SerializeField] bool takeOverrideFromList = false;
-        [SerializeField] List<Transform> spawnOverrideList = null;
+        [Header("If set none then position comes from caller context")]
+        [SerializeField] Transform spawnPosition = null;
+        [SerializeField] bool takePositionFromList = false;
+        [SerializeField] List<Transform> spawnPositions = null;
+        [Header("Effects will be under this transform in hierarchy")]
         [SerializeField] Transform holder;
-        [Header("Negative means it will not destroy, ever!")]
+        [Header("Negative Or Zero means it will not destroy, ever!")]
         [SerializeField] float lifeTime = -1.0f;
         int id = 0;
         int overrideID = 0;
+        GameParticle spawnedEffect;
         object ICloneable.Clone()
         {
             var newInst = new PlayGameParticleFromList
@@ -29,11 +32,47 @@ namespace UnityExt
                 positionalOffset = positionalOffset,
                 rotationalOffset = rotationalOffset,
                 scale = scale,
-                lifeTime = lifeTime
+                lifeTime = lifeTime,
+                takePositionFromList = takePositionFromList
             };
             return newInst;
         }
-        void IEffectPlay.SpawnAndPlay(MonoBehaviour callerContext)
+        void IEffectPlay.Play(MonoBehaviour callerContext, Action OnComplete, bool destroyAtEnd)
+        {
+            if (spawnedEffect == null)
+            {
+                Debug.LogWarning("You have not spawned this effect, yet you are trying to play it. Ignoring");
+                return;
+            }
+            spawnedEffect.Play();
+            if (lifeTime >= 0.0f)
+            {
+                callerContext.StartCoroutine(COR());
+                IEnumerator COR()
+                {
+                    yield return new WaitForSeconds(lifeTime);
+                    if (destroyAtEnd)
+                    {
+                        GameObject.Destroy(spawnedEffect.gameObject);
+                    }
+                    else
+                    {
+                        spawnedEffect.gameObject.SetActive(false);
+                    }
+                    OnComplete?.Invoke();
+                }
+            }
+        }
+        void IEffectPlay.CleanupForPool(MonoBehaviour callerContext)
+        {
+            if (spawnedEffect == null)
+            {
+                Debug.LogWarning("You have not spawned this effect, yet you are trying to clean it up for pool. Ignoring");
+                return;
+            }
+            spawnedEffect.Init();
+        }
+        void IEffectPlay.Spawn(MonoBehaviour callerContext)
         {
             GameParticle selEff;
             if (mode == ListEffectPlayMode.Random)
@@ -53,10 +92,10 @@ namespace UnityExt
             cloneTr.ExResetLocal();
             var root = callerContext.transform;
 
-            var overrideTr = effectSpawnPositionOverride;
-            if (takeOverrideFromList)
+            var overrideTr = spawnPosition;
+            if (takePositionFromList)
             {
-                overrideTr = spawnOverrideList[overrideID];
+                overrideTr = spawnPositions[overrideID];
                 if (overrideTr != null)
                 {
                     overrideID++;
@@ -71,17 +110,13 @@ namespace UnityExt
             cloneTr.localScale = scale;
             var effect = clone.GetComponent<GameParticle>();
             effect.Init();
-            effect.Play();
-
-            if (lifeTime >= 0.0f)
-            {
-                callerContext.StartCoroutine(COR());
-                IEnumerator COR()
-                {
-                    yield return new WaitForSeconds(lifeTime);
-                    GameObject.Destroy(clone);
-                }
-            }
+            spawnedEffect = effect;
+        }
+        void IEffectPlay.SpawnAndPlay(MonoBehaviour callerContext, System.Action OnComplete, bool destroyAtEnd)
+        {
+            var inst = this as IEffectPlay;
+            inst.Spawn(callerContext);
+            inst.Play(callerContext, OnComplete, destroyAtEnd);
         }
     }
 }

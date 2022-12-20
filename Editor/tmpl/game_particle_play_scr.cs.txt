@@ -3,21 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityExt;
+using AttributeExt;
 
 [System.Serializable]
 //Once created and used in editor inspector, never change this class name, otherwise you will loose data--a known unity bug
 public class #SCRIPTNAME# : IEffectPlay
 {
-        
+    void IEffectPlay.CleanupForPool(MonoBehaviour callerContext)
+    {
+        //any cleanup for object pooling of effect
+    }
+
+    void IEffectPlay.Play(MonoBehaviour callerContext, Action OnComplete, bool destroyAtEnd)
+    {
+        //todo play the cached GameParticle
+    }
+
+    void IEffectPlay.Spawn(MonoBehaviour callerContext)
+    {
+        //todo only spawn and cache the spawned GameParticle
+    }
+
     //use it if your internal system needs to clone this class for serialization and/or other purposes
     //object ICloneable.Clone()
     //{
     //    return new #SCRIPTNAME#() { //todo }
     //}
 
-    void IEffectPlay.SpawnAndPlay(MonoBehaviour callerContext)
+    void IEffectPlay.SpawnAndPlay(MonoBehaviour callerContext, Action OnComplete, bool destroyAtEnd)
     {
         //'callerContext' is the monoBehaviour from which 'Spawn And Play' is called
         //todo implement this method
+        //todo at the end of playing invoke 'OnComplete'
+        //todo if 'destroyAtEnd' is true then destroy the gameParticle gameobject at the end, disable otherwise
     }
 }

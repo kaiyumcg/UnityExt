@@ -11,10 +11,9 @@ namespace UnityExt
         //todo next, prev, set id etc control in editor
         [Header("Base setup")]
         [SerializeField] List<GameObject> props;
+        [SerializeField] int selectedPropIndex = 0;
         [SerializeField, CanNotEdit] GameObject selectedProp = null;
-        [SerializeField, CanNotEdit] int selectedPropIndex = 0;
         public int SelectedPropIndex { get { return selectedPropIndex; } set { selectedPropIndex = value; } }
-
         List<UnityEngine.Object> changeListOnEditor = null;
         protected void RegisterEditorChange(UnityEngine.Object changedObject)
         {
@@ -28,6 +27,11 @@ namespace UnityExt
         public void NextProp()
         {
             selectedPropIndex++;
+            EditorUpd();
+        }
+        public void PrevProp()
+        {
+            selectedPropIndex--;
             EditorUpd();
         }
         private void OnValidate()
@@ -52,6 +56,7 @@ namespace UnityExt
         }
         void UpdatePropsOnEditor()
         {
+            CheckIndex();
             props.ExForEachSafe((i) =>
             {
                 if (i != null)

@@ -18,6 +18,10 @@ namespace UnityExt
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+            if (GUILayout.Button("Prev Prop"))
+            {
+                script.PrevProp();
+            }
             if (GUILayout.Button("Next Prop"))
             {
                 script.NextProp();
