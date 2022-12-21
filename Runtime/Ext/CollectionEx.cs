@@ -700,17 +700,7 @@ namespace UnityExt
             }
             return result;
         }
-        public static void ExAddRangeUniquely<T>(this List<T> list, List<T> toAdd) where T : class
-        {
-            toAdd.ExForEachSafe((i) =>
-            {
-                if (list != null && !list.Contains(i))
-                {
-                    list.Add(i);
-                }
-            });
-        }
-        public static void ExAddRangeUniquely<T>(this List<T> list, T[] toAdd) where T : class
+        public static void ExAddRangeUniquely<T>(this IList<T> list, IList<T> toAdd) where T : class
         {
             toAdd.ExForEachSafe((i) =>
             {
@@ -726,17 +716,7 @@ namespace UnityExt
             list.ExForEachSafe((i) => { result.Add(i); });
             return result;
         }
-        public static void ExAddDataRangeUniquely<T>(this List<T> list, List<T> toAdd) where T : struct
-        {
-            toAdd.ExForEach((i) =>
-            {
-                if (list != null && !list.Contains(i))
-                {
-                    list.Add(i);
-                }
-            });
-        }
-        public static void ExAddDataRangeUniquely<T>(this List<T> list, T[] toAdd) where T : struct
+        public static void ExAddDataRangeUniquely<T>(this IList<T> list, IList<T> toAdd) where T : struct
         {
             toAdd.ExForEach((i) =>
             {
